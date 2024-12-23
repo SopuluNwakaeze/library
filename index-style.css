@@ -125,3 +125,11 @@ button[type="submit"]{
 .library-item{
     border: 2px, black, solid;
 }
+
+.delete-button, .read-button{
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-radius: 5px;
+    background-color: rgb(167, 156, 233);
+    border: 2px;
+}

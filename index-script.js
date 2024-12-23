@@ -1,31 +1,32 @@
 const myLibrary = [];
 
-function Book(title,author,pages,isRead){
+function Book(title,author,pages,isRead, id){
     this.title = title;
     this.author= author;
     this.pages = pages;
     this.isRead = isRead;
+    this.id = id;
     this.info = function(){
         return title + " by " + author + ", " + pages + " pages, " + isRead;
     }
 }
 
-function addBookToLibrary(title, author, pages, isRead){
-    const book = new Book(title,author,pages,isRead);
+function addBookToLibrary(title, author, pages, isRead, id){
+    const book = new Book(title,author,pages,isRead, id);
+    // id = myLibrary.length;
     myLibrary.push(book);
 }
 
-addBookToLibrary("The Bible", "Jesus", "1000", false);
-addBookToLibrary("The Bible", "Jesus", "1000", false);
-addBookToLibrary("The Bible", "Jesus", "1000", false);
-addBookToLibrary("The Bible", "Jesus", "1000", false);
-
+addBookToLibrary("The Bible", "Jesus", "1000", false, myLibrary.length);
+addBookToLibrary("The Bible", "Jesus", "1000", false, myLibrary.length);
+addBookToLibrary("The Bible", "Jesus", "1000", false, myLibrary.length);
+addBookToLibrary("The Bible", "Jesus", "1000", false, myLibrary.length);
 
 function displayBook(book){
     const libraryHolder = document.querySelector(".library-holder");
-    console.log(libraryHolder);
     const libraryItem = document.createElement("div");
     libraryItem.setAttribute("class","library-item");
+    libraryItem.setAttribute("data-index", book.id);
 
     const itemContainer = document.createElement("div");
     itemContainer.setAttribute("class", "item-container");
@@ -62,40 +63,110 @@ function displayBook(book){
     span4.appendChild(pReadTag);
     span4.appendChild(pReadBook);
 
+    const deleteButton = document.createElement("button");
+    const readButton = document.createElement("button");
+    deleteButton.textContent = "Delete?";
+    readButton.textContent = "Toggle Read?";
+    deleteButton.setAttribute("class", "delete-button");
+    deleteButton.setAttribute("data-index", book.id);
+    readButton.setAttribute("class", "read-button");
+    readButton.setAttribute("data-index", book.id);
+
     itemContainer.appendChild(span1);
     itemContainer.appendChild(span2);
     itemContainer.appendChild(span3);
     itemContainer.appendChild(span4);
+    itemContainer.appendChild(deleteButton);
+    itemContainer.appendChild(readButton);
 
     libraryItem.appendChild(itemContainer);
     libraryHolder.appendChild(libraryItem);
-    console.log(libraryHolder);
 }
 
 function displayAllBooks(library){
+    // const mainContent = document.querySelector(".main-content");
+    const holder = document.querySelector(".library-holder");
+    // mainContent.removeChild(holder);
+    // const newHolder = document.createElement("div");
+    // newHolder.setAttribute("class", "library-holder");
+    // newHolder.setAttribute("id", "library-holder");
+    // mainContent.appendChild(newHolder);
+ 
+    //e.firstElementChild can be used. 
+    var child = holder.lastElementChild;
+    while (child) {
+        holder.removeChild(child);
+        child = holder.lastElementChild;
+    }
+
+    counter = 0;
+
+    library.forEach(element => {
+        element.id = counter;
+        counter++;
+    })
+
     library.forEach(element => {
         return displayBook(element);
-    });
-    
+    });   
 }
-displayBook(myLibrary[0]);
-
 displayAllBooks(myLibrary);
 
 const form = document.querySelector("#page-form");
 
-form.addEventListener('submit', submitClicked)
+form.addEventListener('submit', submitClicked);
 
 
 function submitClicked(event){
     event.preventDefault();
-    addBookToLibrary(form.title.value, form.author.value, form.pages.value, form.isRead.value);
-    displayBook(myLibrary[myLibrary.length - 1]);
+    addBookToLibrary(form.title.value, form.author.value, form.pages.value, form.isRead.value, myLibrary.length-1);
+    displayAllBooks(myLibrary);
+
+    addListener();
+
     form.title.value = "";
     form.author.value = "";
     form.pages.value = "";
     form.isRead.value = true;
-    console.log("hello")
+}
+
+// const deleteButtonListener = document.querySelectorAll(".delete-button");
+// const readButtonListener = document.querySelectorAll(".read-button");
+
+// deleteButtonListener.forEach(button => button.addEventListener("click", deleteCard(button.dataset.index)));
+// readButtonListener.forEach(button => button.addEventListener("click", toggleRead));
+
+
+addListener();
+
+function addListener(){
+    const deleteButtonListener = document.querySelectorAll(".delete-button");
+    deleteButtonListener.forEach(button => button.addEventListener("click", () => {
+        deleteCard(button.dataset.index);
+    }));
+    const readButtonListener = document.querySelectorAll(".read-button");
+    readButtonListener.forEach(button => button.addEventListener("click", () => {
+        myLibrary[button.dataset.index].isRead = myLibrary[button.dataset.index].isRead ? false : true;
+        displayAllBooks(myLibrary);
+        console.log(myLibrary[button.dataset.index].isRead);
+        addListener()
+    }));
+
+}
+
+function deleteCard(index){
+    if (index > -1) { 
+        myLibrary.splice(index, 1);
+        displayAllBooks(myLibrary);
+        console.log("hello")
+        //removeListener();
+        addListener();
+        console.log("hello")
+    }     
+}
+
+function toggleRead(){
+   
 }
 
 // var form = document.querySelector("#page-form");
