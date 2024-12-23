@@ -15,10 +15,10 @@ function addBookToLibrary(title, author, pages, isRead){
     myLibrary.push(book);
 }
 
-addBookToLibrary("The Bible", "Jesus", "1000", "not read yet");
-addBookToLibrary("The Bible", "Jesus", "1000", "not read yet");
-addBookToLibrary("The Bible", "Jesus", "1000", "not read yet");
-addBookToLibrary("The Bible", "Jesus", "1000", "not read yet");
+addBookToLibrary("The Bible", "Jesus", "1000", false);
+addBookToLibrary("The Bible", "Jesus", "1000", false);
+addBookToLibrary("The Bible", "Jesus", "1000", false);
+addBookToLibrary("The Bible", "Jesus", "1000", false);
 
 
 function displayBook(book){
@@ -56,7 +56,7 @@ function displayBook(book){
 
     const span4 = document.createElement("span");
     const pReadTag = document.createElement("p");
-    pReadTag.textContent = "Read?: ";
+    pReadTag.textContent = "Read It?: ";
     const pReadBook = document.createElement("p");
     pReadBook.textContent = book.isRead;
     span4.appendChild(pReadTag);
@@ -74,7 +74,6 @@ function displayBook(book){
 
 function displayAllBooks(library){
     library.forEach(element => {
-        console.log(displayBook(element))
         return displayBook(element);
     });
     
@@ -83,3 +82,22 @@ displayBook(myLibrary[0]);
 
 displayAllBooks(myLibrary);
 
+const form = document.querySelector("#page-form");
+
+form.addEventListener('submit', submitClicked)
+
+
+function submitClicked(event){
+    event.preventDefault();
+    addBookToLibrary(form.title.value, form.author.value, form.pages.value, form.isRead.value);
+    displayBook(myLibrary[myLibrary.length - 1]);
+    form.title.value = "";
+    form.author.value = "";
+    form.pages.value = "";
+    form.isRead.value = true;
+    console.log("hello")
+}
+
+// var form = document.querySelector("#page-form");
+// function handleForm(event) { event.preventDefault(); console.log("hi")} 
+// form.addEventListener('submit', handleForm);

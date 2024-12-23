@@ -5,21 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="index-style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <script src='index-script.js' defer></script>
 </head>
 <body>
     <div class="container">
-        <div class="library-holder" id ="library-holder">
-            <!-- <div class="library-item">
-                <div class="item-container">
-                    <span><p>Title:</p> <p>Something</p></span>
-                    <span><p>Author:</p> <p>Something</p></span>
-                    <span><p>Pages:</p> <p>Something</p></span>
-                    <span><p>Read:</p> <p>Something</p></span>
-                </div>
-            </div> -->
+        <div class="header">
+            <h1>Welcome To The Library</h1>
         </div>
+        <div class="main-content">
+            <div class="library-holder" id ="library-holder">
+            </div>
+        </div>
+        <div class="side-bar">
+            <div class="form-container">
+                <form id="page-form" action="" method="post">
+                    <div>
+                        <label for="title">Title:</label>
+                        <input required type="text" id="title" name="title" placeholder="title..." value="">
+                    </div>
+                    <div>
+                        <label for="author">Author:</label>
+                        <input required type="text" id="author" name="author" placeholder="name..." value="">
+                    </div>
+                    <div>
+                        <label for="pages">Number of Pages:</label>
+                        <input required type="number" id="pages" name="pages" placeholder="pages..." min="1" max="9999" value="">
+                    </div>
+                    <div>
+                        <span class="radio" >
+                            <input type="radio" value="true" id="isTrue" name="isRead" checked>
+                            <label for="isTrue">I Have Read This Book!</label>
+                        </span>
+                        <span class="radio" >
+                            <input type="radio" value="false" id="isFalse" name="isRead">
+                            <label for="isFalse">I Have Not Read This Book!</label>
+                        </span>
+                    </div>
+                    <div>
+                        <button id="submit" type="submit">Create!</button>
+                    </div>
 
+
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 </html>
